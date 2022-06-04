@@ -39,6 +39,21 @@ public class BinarySearchTree {
 		}	
 	}
 	
+	public void Delete(int deleteKey) {
+		Node deleteNode = Search(deleteKey);
+		if (deleteNode == null) {
+			System.out.println("The Node does not exist");
+		}else {
+			
+		}
+	}
+	private Node Predecessor(Node aNode) {
+		if (aNode != null) {
+			Predecessor(aNode.left);
+		}
+		return aNode;
+	}
+	
 	public void Traverse(String algorithm) {
 		if (algorithm == "DFS") {
 			TraverseDFS(root);
@@ -56,15 +71,27 @@ public class BinarySearchTree {
 		}
 	}
 	private void TraverseBFS(Node[] listParent) {
-		Node[] listParentCopy = listParent;
-		for (int i = 0; i < listParentCopy.length; i++ ) {
-			if (listParent[i] != null) {
-				System.out.println(listParent[i].key);
-				for (int j = 0; j<)
+		Node[] listChildren = new Node[99];
+		if (listParent[0] != null) {
+			for (int i = 0; i < listParent.length; i++ ) {
+				if (listParent[i] != null) {
+					System.out.println(listParent[i].key);
+					for (int j = 0; j < listChildren.length; j++) {
+						if (listChildren[j] == null) {
+							if( listParent[i].left == null && listParent[i].right != null) {
+								listChildren[j] = listParent[i].right;
+								break;
+							}else {
+								listChildren[j] = listParent[i].left;
+								listChildren[j+1] = listParent[i].right;
+								break;
+							}
+						}
+					}
+				}
 			}
-			
+			TraverseBFS(listChildren);
 		}
-		
 	}
 	
 	public Node Search(int key) {
