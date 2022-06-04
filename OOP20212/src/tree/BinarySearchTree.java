@@ -2,6 +2,7 @@ package tree;
 
 public class BinarySearchTree {
 	Node root;
+	
 	public void Insert(int insertKey) {
 		Node newNode = new Node(insertKey);
 		root = newNode;
@@ -37,6 +38,35 @@ public class BinarySearchTree {
 			}
 		}	
 	}
+	
+	public void Traverse(String algorithm) {
+		if (algorithm == "DFS") {
+			TraverseDFS(root);
+		}else if (algorithm == "BFS") {
+			Node[] test = new Node[99];
+			test[0] = root;
+			TraverseBFS(test);
+		}
+	}
+	private void TraverseDFS(Node aNode) {
+		if (aNode != null) {
+			System.out.println(aNode.key);
+			TraverseDFS(aNode.left);
+			TraverseDFS(aNode.right);
+		}
+	}
+	private void TraverseBFS(Node[] listParent) {
+		Node[] listParentCopy = listParent;
+		for (int i = 0; i < listParentCopy.length; i++ ) {
+			if (listParent[i] != null) {
+				System.out.println(listParent[i].key);
+				for (int j = 0; j<)
+			}
+			
+		}
+		
+	}
+	
 	public Node Search(int key) {
 		Node focusNode = root;
 		while(true) {
@@ -56,15 +86,7 @@ public class BinarySearchTree {
 		}
 		return focusNode;
 	}
-	public void Traverse(String algorithm) {
-		if (algorithm == "DFS") {
-			
-			
-		}else if (algorithm == "BFS") {
-			
-		}
 		
-	}
 }
 
 class Node{
