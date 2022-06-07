@@ -3,18 +3,15 @@ package tree;
 public class Main {
 
 	public static void main(String[] args) {
-		BinarySearchTree bst = new BinarySearchTree();
-		bst.Insert(10);
-		bst.Insert(10, 12);
-		bst.Insert(12, 11);
-		bst.Insert(12, 13);
-		bst.Insert(10, 8);
-		bst.Insert(8, 7);
-		bst.Insert(8, 9);
-		bst.root.right.right = null;
-		System.out.println(bst.Search(12).right);
-		bst.Traverse("DFS");
+		AVLTree avl = new AVLTree(5);
+		avl.Insert(10);
+		avl.Insert(10, 8);
+		avl.Insert(8, 6);
+		avl.Insert(6, 4);
+		System.out.println(avl.root.height);
 		
 		
+		
+			
 	}
 }

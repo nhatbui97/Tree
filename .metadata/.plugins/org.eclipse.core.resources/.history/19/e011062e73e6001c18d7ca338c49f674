@@ -1,0 +1,18 @@
+package tree;
+
+public class Main {
+
+	public static void main(String[] args) {
+		AVLTree avl = new AVLTree();
+		avl.Insert(10);
+		avl.Insert(10, 8);
+		avl.Insert(8, 6);
+		avl.Insert(8, 4);
+		System.out.println(avl.root.
+				height);
+		
+		
+		
+			
+	}
+}

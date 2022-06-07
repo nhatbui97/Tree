@@ -1,0 +1,18 @@
+package tree;
+
+public class AVLTree {
+	Node root;
+	public void Create() {
+		root = null;
+	}
+	public void Insert(int parentValue, int insertValue) {
+		
+	}
+	public void Delete(int deleteValue) {
+		
+	}
+	public void Update()
+}
+
+
+

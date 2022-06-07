@@ -1,0 +1,19 @@
+package tree;
+
+public class Main {
+
+	public static void main(String[] args) {
+		BinarySearchTree bst = new BinarySearchTree();
+		bst.Insert(10);
+		bst.Insert(10, 12);
+		bst.Insert(10, 8);
+		
+		Node aNode = bst.Search(10);
+		aNode = null;
+		System.out.println(bst.Search(10));
+		
+		
+		
+		
+	}
+}

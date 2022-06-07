@@ -3,23 +3,23 @@ package tree;
 public class BinarySearchTree {
 	Node root;
 	
-	public void Insert(int insertKey) {
-		Node newNode = new Node(insertKey);
+	public void Insert(int insertValue) {
+		Node newNode = new Node(insertValue);
 		root = newNode;
 		return;
 	}
-	public void Insert(int parentKey, int insertKey) {
-		Node newNode = new Node(insertKey);
-		Node parentNode = Search(parentKey);
-		Node searchDuplicate = Search(insertKey);
+	public void Insert(int parentValue, int insertValue) {
+		Node newNode = new Node(insertValue);
+		Node parentNode = Search(parentValue);
+		Node searchDuplicate = Search(insertValue);
 		if (searchDuplicate != null) {
 			System.out.println("The tree has already had that node");
 		}else {
-			if (insertKey < parentKey) {
+			if (insertValue < parentValue) {
 				Node tempNode = parentNode.left;
 				parentNode.left = newNode;
 				if (tempNode != null) {
-					if (newNode.key > tempNode.key) {
+					if (newNode.value > tempNode.value) {
 						newNode.left = tempNode;
 					}else {
 						newNode.right = tempNode;
@@ -29,7 +29,7 @@ public class BinarySearchTree {
 				Node tempNode = parentNode.right;
 				parentNode.right = newNode;
 				if (tempNode != null) {
-					if (newNode.key > tempNode.key) {
+					if (newNode.value > tempNode.value) {
 						newNode.left = tempNode;
 					}else {
 						newNode.right = tempNode;
@@ -39,17 +39,22 @@ public class BinarySearchTree {
 		}	
 	}
 	
-	public void Delete(int deleteKey) {
-		Node deleteNode = Search(deleteKey);
-		if (deleteNode == null) {
+	public void Delete(int deleteValue) {
+		root = Search(deleteValue);
+		Node tempRoot = root;
+		if (root == null) {
 			System.out.println("The Node does not exist");
 		}else {
+			if (root.left == null && root.right == null) {
+				root = null;
+				root = tempRoot;	
+			}
 			
 		}
 	}
 	private Node Predecessor(Node aNode) {
-		if (aNode != null) {
-			Predecessor(aNode.left);
+		if (aNode.right != null) {
+			return Predecessor(aNode.right);
 		}
 		return aNode;
 	}
@@ -65,7 +70,7 @@ public class BinarySearchTree {
 	}
 	private void TraverseDFS(Node aNode) {
 		if (aNode != null) {
-			System.out.println(aNode.key);
+			System.out.println(aNode.value);
 			TraverseDFS(aNode.left);
 			TraverseDFS(aNode.right);
 		}
@@ -75,7 +80,7 @@ public class BinarySearchTree {
 		if (listParent[0] != null) {
 			for (int i = 0; i < listParent.length; i++ ) {
 				if (listParent[i] != null) {
-					System.out.println(listParent[i].key);
+					System.out.println(listParent[i].value);
 					for (int j = 0; j < listChildren.length; j++) {
 						if (listChildren[j] == null) {
 							if( listParent[i].left == null && listParent[i].right != null) {
@@ -94,32 +99,26 @@ public class BinarySearchTree {
 		}
 	}
 	
-	public Node Search(int key) {
+	public Node Search(int value) {
 		Node focusNode = root;
-		while(true) {
-			if (key < focusNode.key) {
-				focusNode = focusNode.left;
-				if (focusNode == null) {
+		if (focusNode != null) {
+			while(true) {
+				if (value < focusNode.value) {
+					focusNode = focusNode.left;
+					if (focusNode == null) {
+						break;
+					}
+				}else if (value > focusNode.value) {
+					focusNode = focusNode.right;
+					if (focusNode == null) {
+						break;
+					}
+				}else {
 					break;
 				}
-			}else if (key > focusNode.key) {
-				focusNode = focusNode.right;
-				if (focusNode == null) {
-					break;
-				}
-			}else {
-				break;
 			}
 		}
 		return focusNode;
 	}
 		
-}
-
-class Node{
-	int key;
-	Node left, right;
-	Node(int key){
-		this.key = key;
-	}
 }

@@ -1,0 +1,16 @@
+package tree;
+
+public class AVLTree {
+	Node root;
+
+}
+
+class Node{
+	int key;
+	Node left, right;
+	Node(int key){
+		this.key = key;
+		left = right = null;
+	}
+}
+
