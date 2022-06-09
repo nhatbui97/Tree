@@ -1,11 +1,11 @@
 package tree;
 
 public class AVLTree {
-	private boolean isLeftChild;
 	AVLNode root;
-	int maxHeight;
-	AVLTree(int maxHeight){
-		this.maxHeight = maxHeight;
+	int maxDistance;
+	private boolean isLeftChild;
+	AVLTree(int maxDistance){
+		this.maxDistance = maxDistance;
 	}
 	private int height(AVLNode N) {
 		return (N == null) ? 0 : N.height;
@@ -67,6 +67,39 @@ public class AVLTree {
 		updateHeight(y);
 		updateHeight(z);
 	}
+	private void rotate(AVLNode N) {
+		if (balance(N) == 2 || balance(N) == -2) {
+			AVLNode parent = parentNodeOf(N);
+			AVLNode localRoot;
+			if (balance(N) == 2) {
+				if (balance(N.left) == 1) {
+					localRoot = N.left;
+					LL(N);
+				}else {
+					localRoot = N.left.right;
+					LR(N);
+				}
+			}else{
+				if (balance(N.right) == -1) {
+					localRoot = N.right;
+					RR(N);
+				}else {
+					localRoot = N.right.left;
+					RL(N);
+				}
+			}
+			if (parent == null) {
+				root = localRoot;
+			}else {
+				if (isLeftChild) {
+					parent.left = localRoot;
+				}else {
+					parent.right = localRoot;
+				}
+			}
+		}
+		
+	}
 	private AVLNode parentNodeOf(AVLNode N) {
 		AVLNode focusNode = root;
 		while(true) {
@@ -91,50 +124,22 @@ public class AVLTree {
 		}
 		return focusNode;
 	}
-	private void Insert(AVLNode focusNode , 
+	private void Insert(AVLNode N , 
 			int parentValue, int insertValue) {
-		if (parentValue < focusNode.value ) {
-			Insert(focusNode.left, parentValue, insertValue);
-		}else if (parentValue > focusNode.value) {
-			Insert(focusNode.right, parentValue, insertValue);
+		if (parentValue < N.value ) {
+			Insert(N.left, parentValue, insertValue);
+		}else if (parentValue > N.value) {
+			Insert(N.right, parentValue, insertValue);
 		}else {
 			if (insertValue < parentValue) {
-				focusNode.left = new AVLNode(insertValue);
+				N.left = new AVLNode(insertValue);
 			}else {
-				focusNode.right = new AVLNode(insertValue);
+				N.right = new AVLNode(insertValue);
 			}
 		}
-		updateHeight(focusNode);
-		if (balance(focusNode) == 2 || balance(focusNode) == -2) {
-			AVLNode parent = parentNodeOf(focusNode);
-			AVLNode localRoot;
-			if (balance(focusNode) == 2) {
-				if (balance(focusNode.left) == 1) {
-					localRoot = focusNode.left;
-					LL(focusNode);
-				}else {
-					localRoot = focusNode.left.right;
-					LR(focusNode);
-				}
-			}else{
-				if (balance(focusNode.right) == -1) {
-					localRoot = focusNode.right;
-					RR(focusNode);
-				}else {
-					localRoot = focusNode.right.left;
-					RL(focusNode);
-				}
-			}
-			if (parent == null) {
-				root = localRoot;
-			}else {
-				if (isLeftChild) {
-					parent.left = localRoot;
-				}else {
-					parent.right = localRoot;
-				}
-			}
-		}	
+		updateHeight(N);
+		rotate(N);
+		limitDistance(N);
 	}
 	private void TraverseDFS(AVLNode N) {
 		if (N != null) {
@@ -166,7 +171,93 @@ public class AVLTree {
 			TraverseBFS(listChildren);
 		}
 	}
-
+	private AVLNode toTheRight(AVLNode N) {
+		if (N.right != null) {
+			return toTheRight(N.right);
+		}
+		return N;
+	}
+	private AVLNode predecessor(AVLNode N) {
+		return toTheRight(N.left);
+	}
+	private void Delete(AVLNode N, int deleteValue) {
+		if (deleteValue < N.value) {
+			Delete(N.left, deleteValue);
+		}else if (deleteValue > N.value) {
+			Delete(N.right, deleteValue);
+		}else {
+			AVLNode parent = parentNodeOf(N);
+			if (isLeftChild) {
+				if (N.left == null) {
+					if (N.right == null) {
+						parent.left = null;
+					}else {
+						parent.left = N.right;
+					}
+				}else {
+					if(N.right == null) {
+						parent.left = N.left;
+					}else {
+						AVLNode preParent = parentNodeOf(predecessor(N));
+						parent.left = predecessor(N);
+						if (parent.left != N.left) {
+							parent.left.left = N.left;
+						}
+						parent.left.right = N.right;
+						preParent.right = null;
+					}
+				}
+			}else {
+				if (N.left == null) {
+					if (N.right == null) {
+						parent.right = null;
+					}else {
+						parent.right = N.right;
+					}
+				}else {
+					if(N.right == null) {
+						parent.right = N.left;
+					}else {
+						AVLNode preParent = parentNodeOf(predecessor(N));
+						parent.right = predecessor(N);
+						if (parent.right != N.left) {
+							parent.right.left = N.left;
+						}
+						parent.right.right = N.right;
+						preParent.right = null;
+					}
+				}
+				
+			}
+		}
+		updateHeight(N);
+		rotate(N);
+	}
+	private void limitDistance(AVLNode N) {
+		if (N.height - 1 > maxDistance) {
+			if (balance(N) == 1) {
+				for (int i = 0; i < maxDistance - 2; i++) {
+					N = N.left;
+				}
+				if (balance(N.left) == 1) {
+					if (balance(N.left.left) == 1) {
+						
+					}else {
+						
+					}
+				}else {
+					if (balance(N.left.right) == 1) {
+						
+					}else {
+						
+					}
+					
+				}
+				
+			}
+		}
+	}
+	
 	public void Create() {
 		root = null;
 	}
@@ -177,10 +268,27 @@ public class AVLTree {
 		root = new AVLNode(insertValue);
 	}
 	public void Delete(int deleteValue) {
-		
+		Delete(root, deleteValue);
 	}
 	public void Update(int currentValue, int newValue) {
-		
+		AVLNode N = Search(currentValue);
+		AVLNode parent = parentNodeOf(N);
+		if ((N.left == null || newValue > N.left.value )
+				&& (N.right == null || newValue < N.right.value)) {
+			if (parent == null) {
+				N.value = newValue;
+			}else {
+				if (isLeftChild) {
+					if (newValue < parent.value) {
+						N.value = newValue;
+					}
+				}else {
+					if (newValue > parent.value) {
+						N.value = newValue;
+					}
+				}
+			}
+		}
 	}
 	public void Traverse(String algorithm) {
 		if (algorithm == "DFS") {
@@ -191,19 +299,18 @@ public class AVLTree {
 			TraverseBFS(initList);
 		}
 	}
-	
 	public AVLNode Search(int value) {
-		AVLNode focusNode = root;
-		if (focusNode != null) {
+		AVLNode N = root;
+		if (N != null) {
 			while(true) {
-				if (value < focusNode.value) {
-					focusNode = focusNode.left;
-					if (focusNode == null) {
+				if (value < N.value) {
+					N = N.left;
+					if (N == null) {
 						break;
 					}
-				}else if (value > focusNode.value) {
-					focusNode = focusNode.right;
-					if (focusNode == null) {
+				}else if (value > N.value) {
+					N = N.right;
+					if (N == null) {
 						break;
 					}
 				}else {
@@ -211,7 +318,7 @@ public class AVLTree {
 				}
 			}
 		}
-		return focusNode;
+		return N;
 	}
 }
 
