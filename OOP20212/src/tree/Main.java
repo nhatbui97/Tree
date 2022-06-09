@@ -5,11 +5,12 @@ public class Main {
 	public static void main(String[] args) {
 		AVLTree avl = new AVLTree(5);
 		avl.Insert(10);
-		avl.Insert(10, 8);
-		avl.Insert(8, 6);
-		avl.Insert(6, 4);
-		System.out.println(avl.root.height);
+		avl.Insert(10, 9);
+		avl.Insert(10, 15);
+		avl.Insert(15, 13);
+		avl.Insert(13, 14);
 		
+		avl.Traverse("BFS");
 		
 		
 			

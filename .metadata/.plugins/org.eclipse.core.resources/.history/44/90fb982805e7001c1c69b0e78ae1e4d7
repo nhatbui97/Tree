@@ -1,0 +1,18 @@
+package tree;
+
+public class Main {
+
+	public static void main(String[] args) {
+		AVLTree avl = new AVLTree(5);
+		avl.Insert(10);
+		avl.Insert(10, 12);
+		avl.Insert(12, 14);
+
+
+		avl.Traverse("BFS");
+		
+		
+		
+			
+	}
+}
