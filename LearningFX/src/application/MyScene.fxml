@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <children>
+      <BorderPane prefHeight="720.0" prefWidth="1280.0">
+         <top>
+            <AnchorPane prefHeight="50.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutY="32.0" prefHeight="50.0" prefWidth="256.0" text="          TREE DATA STRUCTURES" textFill="RED" />
+                  <Button layoutX="256.0" layoutY="32.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="256.0" style="-fx-background-radius: 10;" text="Generic Tree" />
+                  <Button layoutX="512.0" layoutY="32.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="256.0" text="Binary Search Tree" />
+                  <Button layoutX="1024.0" layoutY="32.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="255.0" text="Balanced Binary Tree" />
+                  <Button layoutX="768.0" layoutY="32.0" mnemonicParsing="false" onAction="#AVLTreeClick" prefHeight="50.0" prefWidth="256.0" text="AVL Tree" />
+               </children>
+            </AnchorPane>
+         </top>
+         <left>
+            <AnchorPane prefHeight="670.0" prefWidth="256.0" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane fx:id="slideMe" layoutX="-216.0" layoutY="218.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-216.0" AnchorPane.rightAnchor="216.0" AnchorPane.topAnchor="218.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#Create" prefHeight="60.0" prefWidth="226.0" text="Create" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" />
+                        <Button layoutY="150.0" mnemonicParsing="false" onAction="#Search" prefHeight="60.0" prefWidth="226.0" text="Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" />
+                        <Button layoutY="203.0" mnemonicParsing="false" onAction="#Traverse" prefHeight="60.0" prefWidth="226.0" text="Traverse" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="240.0" />
+                        <Button layoutY="318.0" mnemonicParsing="false" onAction="#Update" prefHeight="60.0" prefWidth="226.0" text="Update" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0" />
+                        <Button layoutY="219.0" mnemonicParsing="false" onAction="#Delete" prefHeight="60.0" prefWidth="226.0" text="Delete" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="120.0" />
+                        <Button layoutY="60.0" mnemonicParsing="false" onAction="#Insert" prefHeight="60.0" prefWidth="226.0" text="Insert" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="60.0" />
+                        <Button fx:id="slideButton" layoutX="214.0" layoutY="60.0" mnemonicParsing="false" onAction="#slide" prefHeight="240.0" prefWidth="42.0" text="&gt;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="216.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </left>
+         <bottom>
+            <AnchorPane prefHeight="60.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ProgressBar layoutX="397.0" layoutY="19.0" prefHeight="23.0" prefWidth="483.0" progress="0.0" />
+               </children></AnchorPane>
+         </bottom>
+         <right>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </right>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+      <MenuBar prefHeight="32.0" prefWidth="114.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Menu">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Help" />
+                  <MenuItem mnemonicParsing="false" onAction="#quitProgram" text="Quit" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
