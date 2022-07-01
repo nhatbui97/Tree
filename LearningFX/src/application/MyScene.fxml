@@ -27,17 +27,25 @@
             </AnchorPane>
          </top>
          <left>
-            <AnchorPane prefHeight="670.0" prefWidth="256.0" BorderPane.alignment="CENTER">
+            <AnchorPane maxWidth="-Infinity" prefHeight="578.0" prefWidth="256.0" BorderPane.alignment="CENTER">
                <children>
                   <AnchorPane fx:id="slideMe" layoutX="-216.0" layoutY="218.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-216.0" AnchorPane.rightAnchor="216.0" AnchorPane.topAnchor="218.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#Create" prefHeight="60.0" prefWidth="226.0" text="Create" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" />
-                        <Button layoutY="150.0" mnemonicParsing="false" onAction="#Search" prefHeight="60.0" prefWidth="226.0" text="Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" />
-                        <Button layoutY="203.0" mnemonicParsing="false" onAction="#Traverse" prefHeight="60.0" prefWidth="226.0" text="Traverse" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="240.0" />
-                        <Button layoutY="318.0" mnemonicParsing="false" onAction="#Update" prefHeight="60.0" prefWidth="226.0" text="Update" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0" />
-                        <Button layoutY="219.0" mnemonicParsing="false" onAction="#Delete" prefHeight="60.0" prefWidth="226.0" text="Delete" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="120.0" />
-                        <Button layoutY="60.0" mnemonicParsing="false" onAction="#Insert" prefHeight="60.0" prefWidth="226.0" text="Insert" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="60.0" />
+                        <Button fx:id="createButton" mnemonicParsing="false" onAction="#Create" prefHeight="60.0" prefWidth="226.0" text="Create" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" />
+                        <Button fx:id="searchButton" layoutY="150.0" mnemonicParsing="false" onAction="#Search" prefHeight="60.0" prefWidth="226.0" text="Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" />
+                        <Button fx:id="traverseButton" layoutY="203.0" mnemonicParsing="false" onAction="#Traverse" prefHeight="60.0" prefWidth="226.0" text="Traverse" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="240.0" />
+                        <Button fx:id="updateButton" layoutY="318.0" mnemonicParsing="false" onAction="#Update" prefHeight="60.0" prefWidth="226.0" text="Update" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0" />
+                        <Button fx:id="deleteButton" layoutY="219.0" mnemonicParsing="false" onAction="#Delete" prefHeight="60.0" prefWidth="226.0" text="Delete" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="120.0" />
+                        <Button fx:id="insertButton" layoutY="60.0" mnemonicParsing="false" onAction="#Insert" prefHeight="60.0" prefWidth="226.0" text="Insert" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="60.0" />
                         <Button fx:id="slideButton" layoutX="214.0" layoutY="60.0" mnemonicParsing="false" onAction="#slide" prefHeight="240.0" prefWidth="42.0" text="&gt;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="216.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+                        <AnchorPane fx:id="insertBoard" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="60.0">
+                           <children>
+                              <Button layoutX="130.0" layoutY="30.0" mnemonicParsing="false" onAction="#goInsert" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="155.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="30.0" />
+                              <TextField layoutY="2.0" prefHeight="25.0" prefWidth="120.0" promptText="parentValue" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="5.0" />
+                              <TextField layoutX="35.0" layoutY="30.0" prefHeight="30.0" prefWidth="120.0" promptText="insertValue" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="76.0" AnchorPane.topAnchor="30.0" />
+                              <Button layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#goBackInsert" prefHeight="25.0" prefWidth="95.0" text="&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="185.0" AnchorPane.topAnchor="5.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
                   </AnchorPane>
                </children>

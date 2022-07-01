@@ -5,13 +5,35 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.*;	
 
 public class Controller{
 	
-	@FXML
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private Button deleteButton;
+
+    @FXML
+    private AnchorPane insertBoard;
+
+    @FXML
+    private Button insertButton;
+
+    @FXML
     private AnchorPane slideMe;
+
+    @FXML
+    private Button createButton;
+
+    @FXML
+    private Button updateButton;
+
+    @FXML
+    private Button traverseButton;
 	
     @FXML
     private Button slideButton;
@@ -20,7 +42,8 @@ public class Controller{
 
 	@FXML
 	void AVLTreeClick(ActionEvent event) {
-		getMaxDistance();	
+		getMaxDistance();
+		slideMe.setVisible(true);
 	}
 	
 	@FXML
@@ -36,12 +59,41 @@ public class Controller{
 	}
     @FXML
     void Create(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void Insert(ActionEvent event) {
+    	FadeTransition ft1 = new FadeTransition(Duration.seconds(0.5), insertButton);
+    	ft1.setFromValue(1);
+        ft1.setToValue(0);
+        ft1.play();
+        insertButton.setVisible(false);
+        
+        FadeTransition ft2 = new FadeTransition(Duration.seconds(0.5), insertBoard);
+        ft2.setFromValue(0);
+        ft2.setToValue(1);
+        ft2.play();
+        insertBoard.setVisible(true);
+    }
+    @FXML
+    void goInsert(ActionEvent event) {
 
+    }
+
+    @FXML
+    void goBackInsert(ActionEvent event) {
+    	FadeTransition ft1 = new FadeTransition(Duration.seconds(0.5), insertBoard);
+    	ft1.setFromValue(1);
+        ft1.setToValue(0);
+        ft1.play();
+        insertBoard.setVisible(false);
+        
+        FadeTransition ft2 = new FadeTransition(Duration.seconds(0.5), insertButton);
+        ft2.setFromValue(0);
+        ft2.setToValue(1);
+        ft2.play();
+        insertButton.setVisible(true);
     }
 
     @FXML
@@ -68,14 +120,14 @@ public class Controller{
     	TranslateTransition swipeTransition = new TranslateTransition();
     	swipeTransition.setNode(slideMe);
     	swipeTransition.setDuration(Duration.seconds(1));
-    	if (slideButton.getText().equals(">")) {
+    	if (slideButton.getText().equals(">>>")) {
 	    	swipeTransition.setToX(slideMe.getWidth() - slideButton.getWidth() );
 	    	swipeTransition.play();
-	    	slideButton.setText("<");
+	    	slideButton.setText("<<<");
     	}else {
     		swipeTransition.setToX(0);
     		swipeTransition.play();
-    		slideButton.setText(">");
+    		slideButton.setText(">>>");
     	}
     }
 }
