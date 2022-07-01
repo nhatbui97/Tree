@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+   <children>
+      <MenuBar layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Menu">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Help" />
+                  <MenuItem mnemonicParsing="false" onAction="#quitProgram" text="Quit" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <Label layoutX="8.0" layoutY="25.0" prefHeight="50.0" prefWidth="160.0" text="DATA STRUCTURES" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <graphic>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/tree.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Button layoutX="160.0" layoutY="25.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" style="-fx-background-radius: 10;" text="Generic Tree" AnchorPane.leftAnchor="160.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button layoutX="522.0" layoutY="42.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" style="-fx-background-radius: 10;" text="Binary Search Tree" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button layoutX="640.0" layoutY="25.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" style="-fx-background-radius: 10;" text="Balanced Binary Tree" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="640.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <Button layoutX="400.0" layoutY="238.0" mnemonicParsing="false" onAction="#AVLTreeClick" prefHeight="40.0" prefWidth="160.0" style="-fx-background-radius: 10;" text="AVL Tree" AnchorPane.bottomAnchor="535.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="25.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Button>
+      <AnchorPane fx:id="slideMe" layoutX="60.0" layoutY="200.0" prefHeight="360.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="760.0">
+         <children>
+            <Button fx:id="createButton" mnemonicParsing="false" onAction="#Create" prefHeight="60.0" prefWidth="160.0" text="CREATE" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/create.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="insertButton" layoutX="13.0" layoutY="59.0" mnemonicParsing="false" onAction="#Insert" prefHeight="60.0" prefWidth="160.0" text="INSERT" AnchorPane.bottomAnchor="240.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="60.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/insert.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#Delete" prefHeight="60.0" prefWidth="226.0" text="DELETE" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="120.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/delete.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#Update" prefHeight="60.0" prefWidth="226.0" text="UPDATE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/update.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="traverseButton" layoutX="10.0" layoutY="213.0" mnemonicParsing="false" onAction="#Traverse" prefHeight="60.0" prefWidth="226.0" text="TRAVERSE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="240.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/traverse.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="searchButton" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#Search" prefHeight="60.0" prefWidth="226.0" text="SEARCH" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="300.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/search.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button fx:id="slideButton" layoutX="174.0" layoutY="60.0" mnemonicParsing="false" onAction="#slide" prefHeight="240.0" prefWidth="40.0" style="-fx-background-radius: 10;" text="&gt;&gt;&gt;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font></Button>
+            <AnchorPane fx:id="insertBoard" prefHeight="60.0" prefWidth="160.0" visible="false" AnchorPane.topAnchor="60.0">
+               <children>
+                  <Button layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#goInsert" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="18.0" />
+                  <TextField layoutX="20.0" layoutY="5.0" prefHeight="25.0" prefWidth="120.0" promptText="Parent value" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="5.0" />
+                  <TextField layoutX="20.0" layoutY="30.0" prefHeight="30.0" prefWidth="120.0" promptText="Insert value" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="30.0" />
+                  <Button mnemonicParsing="false" onAction="#goBackInsert" prefHeight="25.0" prefWidth="95.0" text="&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="5.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
