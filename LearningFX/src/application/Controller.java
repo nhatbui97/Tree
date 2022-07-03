@@ -2,6 +2,7 @@ package application;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -11,39 +12,17 @@ import javafx.event.*;
 
 public class Controller{
 	
-    @FXML
-    private Button searchButton;
 
     @FXML
-    private Button deleteButton;
-
-    @FXML
-    private AnchorPane insertBoard;
-
-    @FXML
-    private Button insertButton;
-
-    @FXML
-    private AnchorPane slideMe;
-
-    @FXML
-    private Button createButton;
-
-    @FXML
-    private Button updateButton;
-
-    @FXML
-    private Button traverseButton;
+    private ProgressBar progressBar;
 	
-    @FXML
-    private Button slideButton;
-    
 	private int maxDistance;
 
 	@FXML
 	void AVLTreeClick(ActionEvent event) {
 		getMaxDistance();
-		slideMe.setVisible(true);
+		buttonBar.setVisible(true);
+		listViewBar.setVisible(true);
 	}
 	
 	@FXML
@@ -57,11 +36,47 @@ public class Controller{
         dialog.showAndWait();
        	maxDistance = Integer.parseInt(dialog.getEditor().getText());
 	}
+
+    //___________________________________ButtonBar(Left)______________________________________
+    //________________________________________________________________________________________
+
+	
+    //slide
+    @FXML
+    private AnchorPane buttonBar;
+    @FXML
+    private Button slideButtonLeft;
+    @FXML
+    void slideButtonBar(ActionEvent event) {
+    	TranslateTransition slideTransition = new TranslateTransition();
+    	slideTransition.setNode(buttonBar);
+    	slideTransition.setDuration(Duration.seconds(1));
+    	if (slideButtonLeft.getText().equals(">>>")) {
+	    	slideTransition.setToX(buttonBar.getWidth() - slideButtonLeft.getWidth() );
+	    	slideTransition.play();
+	    	slideButtonLeft.setText("<<<");
+    	}else {
+    		slideTransition.setToX(0);
+    		slideTransition.play();
+    		slideButtonLeft.setText(">>>");
+    	}
+    }
+    //-------------------------------------------------------------------------------------------
+    
+    //create
+    @FXML
+    private Button createButton;
     @FXML
     void Create(ActionEvent event) {
     	
     }
-
+    //-------------------------------------------------------------------------------------------
+    
+    //insert
+    @FXML
+    private Button insertButton;
+    @FXML
+    private AnchorPane insertBoard;
     @FXML
     void Insert(ActionEvent event) {
     	FadeTransition ft1 = new FadeTransition(Duration.seconds(0.5), insertButton);
@@ -80,7 +95,6 @@ public class Controller{
     void goInsert(ActionEvent event) {
 
     }
-
     @FXML
     void goBackInsert(ActionEvent event) {
     	FadeTransition ft1 = new FadeTransition(Duration.seconds(0.5), insertBoard);
@@ -95,40 +109,69 @@ public class Controller{
         ft2.play();
         insertButton.setVisible(true);
     }
-
+    //-------------------------------------------------------------------------------------------
+    
+    //delete
+    @FXML
+    private Button deleteButton;
     @FXML
     void Delete(ActionEvent event) {
 
     }
-
+    //-------------------------------------------------------------------------------------------
+    
+    //update
+    @FXML
+    private Button updateButton;
     @FXML
     void Update(ActionEvent event) {
 
     }
-
+    //-------------------------------------------------------------------------------------------
+    
+    //traverse
+    @FXML
+    private Button traverseButton;
     @FXML
     void Traverse(ActionEvent event) {
 
     }
-
+    //-------------------------------------------------------------------------------------------
+    
+    //search
+    @FXML
+    private Button searchButton;
     @FXML
     void Search(ActionEvent event) {
 
     }
+    //-------------------------------------------------------------------------------------------
+    
+    //_________________________________ListViewBar(Right)_____________________________________
+    //________________________________________________________________________________________
+    
+    //slide
     @FXML
-    void slide(ActionEvent event) {
-    	TranslateTransition swipeTransition = new TranslateTransition();
-    	swipeTransition.setNode(slideMe);
-    	swipeTransition.setDuration(Duration.seconds(1));
-    	if (slideButton.getText().equals(">>>")) {
-	    	swipeTransition.setToX(slideMe.getWidth() - slideButton.getWidth() );
-	    	swipeTransition.play();
-	    	slideButton.setText("<<<");
+    private Button slideButtonRight;
+    @FXML
+    private AnchorPane listViewBar;
+    @FXML
+    void slideListView(ActionEvent event) {
+    	TranslateTransition slideTransition = new TranslateTransition();
+    	slideTransition.setNode(listViewBar);
+    	slideTransition.setDuration(Duration.seconds(1));
+    	if (slideButtonRight.getText().equals("<<<")) {
+	    	slideTransition.setToX (slideButtonRight.getWidth() - listViewBar.getWidth());
+    		slideTransition.play();
+    		slideButtonRight.setText(">>>");
     	}else {
-    		swipeTransition.setToX(0);
-    		swipeTransition.play();
-    		slideButton.setText(">>>");
+    		slideTransition.setToX(0);
+	    	slideTransition.play();
+	    	slideButtonRight.setText("<<<");
     	}
+
     }
+    
+    
 }
 
