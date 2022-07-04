@@ -1,9 +1,12 @@
 package tree;
 
-public class AVLTree {
-	AVLNode root;
+public class AVLTree extends Tree{
+	private AVLNode root;
+	public AVLNode getRoot() {
+		return root;
+	}
 	int maxDistance;
-	AVLTree(int maxDistance){
+	public AVLTree(int maxDistance){
 		this.maxDistance = maxDistance;
 	}
 	//--------------------------------------------------------------
@@ -147,13 +150,20 @@ public class AVLTree {
 	private void Insert(AVLNode N , 
 			int parentValue, int insertValue) {
 		if (parentValue < N.value ) {
+			orderVisit.add(N.value);
+			orderDirection.add(0);
 			Insert(N.left, parentValue, insertValue);
 		}else if (parentValue > N.value) {
+			orderVisit.add(N.value);
+			orderDirection.add(1);
 			Insert(N.right, parentValue, insertValue);
 		}else {
+			orderVisit.add(N.value);
 			if (insertValue < parentValue) {
+				orderDirection.add(0);
 				N.left = new AVLNode(insertValue);
 			}else {
+				orderDirection.add(1);
 				N.right = new AVLNode(insertValue);
 			}
 		}
@@ -362,18 +372,23 @@ public class AVLTree {
 	//--------------------------------------------------------------
 	//--------------------------------------------------------------
 	//Operations
+	@Override
 	public void Create() {
 		root = null;
 	}
+	@Override
 	public void Insert(int parentValue, int insertValue) {
 		Insert(root, parentValue, insertValue);
 	}
+	@Override
 	public void Insert(int insertValue) {
 		root = new AVLNode(insertValue);
 	}
+	@Override
 	public void Delete(int deleteValue) {
 		Delete(root, deleteValue);
 	}
+	@Override
 	public void Update(int currentValue, int newValue) {
 		AVLNode N = Search(currentValue);
 		AVLNode parent = parentNodeOf(N);
@@ -394,6 +409,7 @@ public class AVLTree {
 			}
 		}
 	}
+	@Override
 	public void Traverse(String algorithm) {
 		if (algorithm == "DFS") {
 			TraverseDFS(root);
@@ -403,6 +419,7 @@ public class AVLTree {
 			TraverseBFS(initList);
 		}
 	}
+	@Override
 	public AVLNode Search(int value) {
 		AVLNode N = root;
 		if (N != null) {
