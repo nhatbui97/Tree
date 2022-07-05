@@ -7,6 +7,15 @@ public class Tree {
 	ArrayList<Integer> orderVisit = new ArrayList<Integer>();
 	//direction: 0 - left, 1 - right
 	ArrayList<Integer> orderDirection= new ArrayList<Integer>();
+	boolean rotate = false;
+	boolean heightLimit = false;
+	
+	public boolean isRotate() {
+		return rotate;
+	}
+	public boolean isHeightLimit() {
+		return heightLimit;
+	}
 	public Tree() {}
 	public Node getRoot() {
 		return root;

@@ -6,8 +6,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
+      <AnchorPane fx:id="layout" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <MenuBar blendMode="DIFFERENCE" maxHeight="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.bottomAnchor="575.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="MENU">
@@ -49,7 +50,7 @@
          </font></Button>
       <AnchorPane fx:id="buttonBar" layoutX="60.0" layoutY="200.0" prefHeight="270.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="758.0" AnchorPane.topAnchor="300.0">
          <children>
-            <Button fx:id="createButton" mnemonicParsing="false" onAction="#Create" prefHeight="44.0" prefWidth="160.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="CREATE" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="2.0">
+            <Button fx:id="createButton" mnemonicParsing="false" onAction="#Create" prefHeight="44.0" prefWidth="160.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="CREATE" AnchorPane.bottomAnchor="225.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="1.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -71,7 +72,7 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#Delete" prefHeight="44.0" prefWidth="226.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="DELETE" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0">
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#Delete" prefHeight="44.0" prefWidth="226.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="DELETE" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="91.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -82,7 +83,7 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#Update" prefHeight="44.0" prefWidth="226.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="UPDATE" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0">
+            <Button fx:id="updateButton" mnemonicParsing="false" onAction="#Update" prefHeight="44.0" prefWidth="226.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="UPDATE" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="136.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -93,7 +94,7 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="traverseButton" layoutX="2.0" layoutY="277.0" mnemonicParsing="false" onAction="#Traverse" prefHeight="44.0" prefWidth="157.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="TRAVERSE" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0">
+            <Button fx:id="traverseButton" layoutX="2.0" layoutY="277.0" mnemonicParsing="false" onAction="#Traverse" prefHeight="44.0" prefWidth="157.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="TRAVERSE" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="181.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -104,7 +105,7 @@
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
-            <Button fx:id="searchButton" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#Search" prefHeight="44.0" prefWidth="226.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="SEARCH" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0">
+            <Button fx:id="searchButton" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#Search" prefHeight="44.0" prefWidth="226.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" text="SEARCH" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="226.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -127,7 +128,7 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <AnchorPane fx:id="insertBoard2" layoutY="46.0" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1;" visible="false" AnchorPane.bottomAnchor="180.0" AnchorPane.topAnchor="46.0">
+            <AnchorPane fx:id="insertBoard2" layoutY="46.0" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1; -fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="180.0" AnchorPane.topAnchor="46.0">
                <children>
                   <Button layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#goInsert2" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                      <font>
@@ -141,7 +142,7 @@
                      </font></Button>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="insertBoard1" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0">
+            <AnchorPane fx:id="insertBoard1" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1; -fx-background-color: white;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0">
                <children>
                   <Button layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#goInsert1" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
                      <font>
@@ -150,6 +151,75 @@
                   </Button>
                   <TextField fx:id="insertText1" layoutX="37.0" layoutY="17.0" prefHeight="22.0" prefWidth="79.0" promptText="Insert value" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="10.0" />
                   <Button mnemonicParsing="false" onAction="#goBackInsert1" prefHeight="25.0" prefWidth="95.0" text="&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="deleteBoard" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1; -fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="91.0">
+               <children>
+                  <Button layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#goDelete" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goBackDelete" prefHeight="25.0" prefWidth="95.0" text="&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="deleteText" layoutX="4.0" layoutY="10.0" promptText="Delete value" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="searchBoard" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1; -fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="226.0">
+               <children>
+                  <Button layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#goSearch" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goBackSearch" prefHeight="25.0" prefWidth="95.0" text="&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="searchText" layoutX="4.0" layoutY="10.0" promptText="Search value" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="traverseBoard" layoutX="10.0" layoutY="10.0" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1; -fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="181.0">
+               <children>
+                  <Button layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#goTraverse" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#goBackTraverse" prefHeight="25.0" prefWidth="95.0" text="&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="traverseText" layoutX="4.0" layoutY="10.0" promptText="Algorithm" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="updateBoard" layoutX="10.0" layoutY="56.0" prefHeight="44.0" prefWidth="157.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 1; -fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="43.0" AnchorPane.topAnchor="136.0">
+               <children>
+                  <Button layoutX="120.0" layoutY="18.0" mnemonicParsing="false" onAction="#goUpdate" prefHeight="25.0" prefWidth="77.0" text="Go" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <TextField fx:id="currentText" layoutX="37.0" layoutY="2.0" prefHeight="20.0" prefWidth="79.0" promptText="Current value" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="2.0">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="updateText" layoutX="37.0" layoutY="17.0" prefHeight="22.0" prefWidth="79.0" promptText="Update value" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="20.0">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </TextField>
+                  <Button mnemonicParsing="false" onAction="#goBackUpdate" prefHeight="25.0" prefWidth="95.0" text="&lt;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>

@@ -114,6 +114,7 @@ public class AVLTree extends Tree{
 	}
 	private void rotate(AVLNode N) {
 		if (balance(N) == 2 || balance(N) == -2) {
+			rotate = true;
 			AVLNode parent = parentNodeOf(N);
 			AVLNode localRoot;
 			if (balance(N) == 2) {
@@ -149,15 +150,15 @@ public class AVLTree extends Tree{
 	//nhập/xóa
 	private void Insert(AVLNode N , 
 			int parentValue, int insertValue) {
-		if (parentValue < N.value ) {
+		if (parentValue < N.value && insertValue < N.value) {
 			orderVisit.add(N.value);
 			orderDirection.add(0);
 			Insert(N.left, parentValue, insertValue);
-		}else if (parentValue > N.value) {
+		}else if (parentValue > N.value && insertValue > N.value) {
 			orderVisit.add(N.value);
 			orderDirection.add(1);
 			Insert(N.right, parentValue, insertValue);
-		}else {
+		}else if (parentValue == N.value) {
 			orderVisit.add(N.value);
 			if (insertValue < parentValue) {
 				orderDirection.add(0);
@@ -170,11 +171,8 @@ public class AVLTree extends Tree{
 		updateHeight(N);
 		rotate(N);
 		if (root.height - 1 > maxDistance) {
-			System.out.println("________Before________");
-			Traverse("BFS");
+			heightLimit = true;
 			limitDistance(N);
-			System.out.println("________After________");
-			Traverse("BFS");
 		}
 	}
 	private void Delete(AVLNode N, int deleteValue) {
@@ -378,6 +376,8 @@ public class AVLTree extends Tree{
 	}
 	@Override
 	public void Insert(int parentValue, int insertValue) {
+		orderVisit.removeAll(orderVisit);
+		orderDirection.removeAll(orderDirection);
 		Insert(root, parentValue, insertValue);
 	}
 	@Override
