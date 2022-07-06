@@ -9,6 +9,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
       <AnchorPane fx:id="layout" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="layoutVisit" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <MenuBar blendMode="DIFFERENCE" maxHeight="-Infinity" prefHeight="25.0" prefWidth="800.0" AnchorPane.bottomAnchor="575.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="MENU">
@@ -117,7 +118,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="slideButtonLeft" layoutX="174.0" layoutY="60.0" mnemonicParsing="false" onAction="#slideButtonBar" prefHeight="180.0" prefWidth="40.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="158.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+            <Button fx:id="slideButtonLeft" layoutX="174.0" layoutY="60.0" mnemonicParsing="false" onAction="#slideButtonBar" prefHeight="180.0" prefWidth="40.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="158.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="225.0">
                <font>
                   <Font name="System Bold" size="10.0" />
                </font>
@@ -231,7 +232,7 @@
       <AnchorPane fx:id="listViewBar" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="758.0" AnchorPane.topAnchor="300.0">
          <children>
             <ListView layoutX="24.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 10; -fx-border-width: 3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="43.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Button fx:id="slideButtonRight" layoutX="-3.0" layoutY="22.0" mnemonicParsing="false" onAction="#slideListView" prefHeight="240.0" prefWidth="42.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="180.0">
+            <Button fx:id="slideButtonRight" layoutX="-3.0" layoutY="22.0" mnemonicParsing="false" onAction="#slideListView" prefHeight="240.0" prefWidth="42.0" style="-fx-border-color: black; -fx-background-color: white; -fx-border-width: 3;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="225.0">
                <font>
                   <Font name="System Bold" size="10.0" />
                </font>
