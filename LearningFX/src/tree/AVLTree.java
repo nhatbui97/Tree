@@ -177,8 +177,12 @@ public class AVLTree extends Tree{
 	}
 	private void Delete(AVLNode N, int deleteValue) {
 		if (deleteValue < N.value) {
+			orderVisit.add(N.value);
+			orderDirection.add(0);
 			Delete(N.left, deleteValue);
 		}else if (deleteValue > N.value) {
+			orderVisit.add(N.value);
+			orderDirection.add(1);
 			Delete(N.right, deleteValue);
 		}else {
 			AVLNode parent = parentNodeOf(N);

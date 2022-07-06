@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.TranslateTransition;
-import javafx.concurrent.Task;
 import javafx.event.*;	
 
 public class Controller{
@@ -48,6 +47,13 @@ public class Controller{
         ft.play();
         
         hideAllBoard();
+        
+        ft.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+            	layout.getChildren().clear();
+            }
+        });
         
 	}
 	void getMaxDistance() {
@@ -106,7 +112,14 @@ public class Controller{
 	        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), layout);
 	        ft.setFromValue(1);
 	        ft.setToValue(0);
-	        ft.play();        
+	        ft.play(); 
+	        ft.setOnFinished(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent event) {
+	            	layout.getChildren().clear();
+	            }
+	        });
+	    	
     	}
     }
     //-------------------------------------------------------------------------------------------
@@ -137,8 +150,6 @@ public class Controller{
     }
     @FXML
     void goInsert1(ActionEvent event) {
-    	layout.getChildren().clear();
-    	layout.setVisible(true);
     	
     	int insertValue = Integer.parseInt(insertText1.getText());
     	insertText1.setText(null);
@@ -164,7 +175,7 @@ public class Controller{
         
         listStack.add(stack);
         
-        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), layout);
+        FadeTransition ft = new FadeTransition(Duration.seconds(1), layout);
         ft.setFromValue(0);
         ft.setToValue(1);
         ft.play();
@@ -178,12 +189,16 @@ public class Controller{
     }
     @FXML
     void goInsert2(ActionEvent event){
+    	SequentialTransition seqT = new SequentialTransition();
+    	
     	int insertValue = Integer.parseInt(insertText2.getText());
     	int parentValue = Integer.parseInt(parentText2.getText());
     	tree.Insert(parentValue, insertValue);
     	
     	parentText2.setText(null);
-    	insertText2.setText(null);   	
+    	insertText2.setText(null);   
+    	
+    	//visitNode()
     	
     	int size = tree.getOrderVisit().size();
     	StackPane parentStack = null;
@@ -214,10 +229,10 @@ public class Controller{
             
             listLine.add(line);
             
-            FadeTransition ft = new FadeTransition(Duration.seconds(0.5), line);
+            FadeTransition ft = new FadeTransition(Duration.seconds(1), line);
             ft.setFromValue(0);
             ft.setToValue(1);
-            ft.play();
+            seqT.getChildren().add(ft);
             
             layout.getChildren().add(line);
             
@@ -238,14 +253,13 @@ public class Controller{
             
             listStack.add(stack);
             
-            FadeTransition ft1 = new FadeTransition(Duration.seconds(0.5), stack);
+            FadeTransition ft1 = new FadeTransition(Duration.seconds(1), stack);
             ft1.setFromValue(0);
             ft1.setToValue(1);
-            ft1.play();
+            seqT.getChildren().add(ft1);
             
             layout.getChildren().add(stack);
-            
-            
+                     
     	}else {
     		targetX = X + radius + targetX;
     		
@@ -254,10 +268,10 @@ public class Controller{
             line.setStrokeWidth(2);
             listLine.add(line);
             
-            FadeTransition ft = new FadeTransition(Duration.seconds(0.5), line);
+            FadeTransition ft = new FadeTransition(Duration.seconds(1), line);
             ft.setFromValue(0);
             ft.setToValue(1);
-            ft.play();
+            seqT.getChildren().add(ft);
             
             layout.getChildren().add(line);
             
@@ -278,10 +292,10 @@ public class Controller{
             
             listStack.add(stack);
             
-            FadeTransition ft1 = new FadeTransition(Duration.seconds(0.5), stack);
+            FadeTransition ft1 = new FadeTransition(Duration.seconds(1), stack);
             ft1.setFromValue(0);
             ft1.setToValue(1);
-            ft1.play();
+            seqT.getChildren().add(ft1);
             
             layout.getChildren().add(stack);
     		
@@ -292,7 +306,8 @@ public class Controller{
     	if (tree.isHeightLimit() == true) {
     		
     	}
-    	 	
+    	seqT.play();
+
     }
     @FXML
     void goBackInsert2(ActionEvent event) {
@@ -316,7 +331,27 @@ public class Controller{
     }
     @FXML
     void goDelete(ActionEvent event) {
-
+    	int deleteValue = Integer.parseInt(deleteText.getText());
+    	deleteText.setText(null);
+    	tree.Delete(deleteValue);
+    	
+    	//visitNode()
+    	
+    	for (StackPane stack : listStack) {
+    		for (javafx.scene.Node n : stack.getChildren()) {
+    			if (n instanceof Text) {
+    				if(((Text) n).getText().equals(String.valueOf(deleteValue))) {
+    					Line lineRemove = listLine.get(listStack.indexOf(stack) - 1);
+    					
+    					listStack.remove(stack);
+    					FadeTransition ft = new FadeTransition(Duration.seconds(1), stack);
+	        	        ft.setFromValue(1);
+	        	        ft.setToValue(0);
+	        	        ft.play();  					
+    				}
+    			}
+    		}
+    	}
     }
 
     @FXML
@@ -452,13 +487,12 @@ public class Controller{
     		for (StackPane stack : listStack) {
     			for (javafx.scene.Node n : stack.getChildren()) {
     				if (n instanceof Text) {
-    					Text n1 = (Text) n;
-		    			if (n1.getText().equals(String.valueOf(tree.getOrderVisit().get(i)))) {
+		    			if (((Text) n).getText().equals(String.valueOf(tree.getOrderVisit().get(i)))) {
 		    				stack.setBlendMode(BlendMode.DIFFERENCE);
 		        			FadeTransition ft = new FadeTransition(Duration.seconds(1), stack);
 		        	        ft.setFromValue(0);
 		        	        ft.setToValue(1);
-		        	        listFade.add(ft);       
+		        	        listFade.add(ft);  
 		        			if (tree.getOrderDirection().get(i) == 0) {
 		        				//do something with list view
 		        			}else {
