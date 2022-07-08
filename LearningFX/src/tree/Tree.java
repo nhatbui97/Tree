@@ -4,28 +4,26 @@ import java.util.ArrayList;
 
 public class Tree {
 	Node root;
-	ArrayList<Integer> orderVisit = new ArrayList<Integer>();
-	//direction: 0 - left, 1 - right
-	ArrayList<Integer> orderDirection= new ArrayList<Integer>();
+	ArrayList<Node> listNode = new ArrayList<Node>();
+	ArrayList<Node> listNodeBeforeRotate = new ArrayList<Node>();
+	ArrayList<Node> listNodeBeforeLimitHeight = new ArrayList<Node>();
 	boolean rotate = false;
 	boolean heightLimit = false;
 	
-	public boolean isRotate() {
-		return rotate;
+	public ArrayList<Node> getListNodeBeforeRotate() {
+		return listNodeBeforeRotate;
 	}
-	public boolean isHeightLimit() {
-		return heightLimit;
+	public ArrayList<Node> getListNodeBeforeLimitHeight() {
+		return listNodeBeforeLimitHeight;
 	}
 	public Tree() {}
 	public Node getRoot() {
 		return root;
 	}
-	public ArrayList<Integer> getOrderVisit() {
-		return orderVisit;
+	public ArrayList<Node> getListNode() {
+		Traverse("BFS");
+		return listNode;
 	}
-	public ArrayList<Integer> getOrderDirection() {
-		return orderDirection;
-	};
 	public void Create() {};
 	public void Insert(int parentValue, int insertValue) {};
 	public void Insert(int insertValue) {};

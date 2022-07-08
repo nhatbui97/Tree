@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.ArrayList;
+
 public class AVLTree extends Tree{
 	private AVLNode root;
 	public AVLNode getRoot() {
@@ -151,38 +153,33 @@ public class AVLTree extends Tree{
 	private void Insert(AVLNode N , 
 			int parentValue, int insertValue) {
 		if (parentValue < N.value && insertValue < N.value) {
-			orderVisit.add(N.value);
-			orderDirection.add(0);
 			Insert(N.left, parentValue, insertValue);
 		}else if (parentValue > N.value && insertValue > N.value) {
-			orderVisit.add(N.value);
-			orderDirection.add(1);
 			Insert(N.right, parentValue, insertValue);
 		}else if (parentValue == N.value) {
-			orderVisit.add(N.value);
-			if (insertValue < parentValue) {
-				orderDirection.add(0);
+			if (insertValue < parentValue && N.left == null) {
 				N.left = new AVLNode(insertValue);
-			}else {
-				orderDirection.add(1);
+			}else if (insertValue > parentValue && N.right == null) {
 				N.right = new AVLNode(insertValue);
 			}
 		}
 		updateHeight(N);
+		if (listNodeBeforeRotate.isEmpty()) {
+			listNodeBeforeRotate = getListNode();
+		}
 		rotate(N);
 		if (root.height - 1 > maxDistance) {
 			heightLimit = true;
+			if (listNodeBeforeLimitHeight.isEmpty()) {
+				listNodeBeforeLimitHeight = getListNode();
+			}
 			limitDistance(N);
 		}
 	}
 	private void Delete(AVLNode N, int deleteValue) {
 		if (deleteValue < N.value) {
-			orderVisit.add(N.value);
-			orderDirection.add(0);
 			Delete(N.left, deleteValue);
 		}else if (deleteValue > N.value) {
-			orderVisit.add(N.value);
-			orderDirection.add(1);
 			Delete(N.right, deleteValue);
 		}else {
 			AVLNode parent = parentNodeOf(N);
@@ -236,29 +233,28 @@ public class AVLTree extends Tree{
 			TraverseDFS(N.right);
 		}
 	}
-	private void TraverseBFS(AVLNode[] listParent) {
-		AVLNode[] listChildren = new AVLNode[99];
-		if (listParent[0] != null) {
-			for (int i = 0; i < listParent.length; i++ ) {
-				if (listParent[i] != null) {
-					System.out.print(listParent[i].value 
-							+ "(" + listParent[i].height + ")" + " ");
-					for (int j = 0; j < listChildren.length; j++) {
-						if (listChildren[j] == null) {
-							if( listParent[i].left == null && listParent[i].right != null) {
-								listChildren[j] = listParent[i].right;
-								break;
-							}else {
-								listChildren[j] = listParent[i].left;
-								listChildren[j+1] = listParent[i].right;
-								break;
-							}
-						}
-					}
-				}
+	private int floor = 0;
+	private void TraverseBFS() {
+		ArrayList<Node> listChildren= new ArrayList<Node>();
+		int startIndex = (int) Math.pow(2, floor) - 1;
+		int endIndex = 2 * startIndex;
+		for (int i = startIndex; i < 1 + endIndex ; i++ ) {
+			AVLNode parent = (AVLNode) listNode.get(i);
+			if (parent == null) {
+				listChildren.add(null);
+				listChildren.add(null);
+			}else {
+				listChildren.add(parent.left);
+				listChildren.add(parent.right);
 			}
-			System.out.print("\n");
-			TraverseBFS(listChildren);
+		}
+		for (Node n : listChildren) {
+			if (n != null) {
+				listNode.addAll(listChildren);
+				floor++;
+				TraverseBFS();
+				break;
+			}
 		}
 	}
 	//--------------------------------------------------------------
@@ -380,12 +376,14 @@ public class AVLTree extends Tree{
 	}
 	@Override
 	public void Insert(int parentValue, int insertValue) {
-		orderVisit.removeAll(orderVisit);
-		orderDirection.removeAll(orderDirection);
+		listNodeBeforeRotate.clear();
+		listNodeBeforeLimitHeight.clear();
 		Insert(root, parentValue, insertValue);
 	}
 	@Override
 	public void Insert(int insertValue) {
+		listNodeBeforeRotate.clear();
+		listNodeBeforeLimitHeight.clear();
 		root = new AVLNode(insertValue);
 	}
 	@Override
@@ -418,9 +416,11 @@ public class AVLTree extends Tree{
 		if (algorithm == "DFS") {
 			TraverseDFS(root);
 		}else if (algorithm == "BFS") {
-			AVLNode[] initList = new AVLNode[99];
-			initList[0] = root;
-			TraverseBFS(initList);
+			listNode.clear();
+			floor = 0;
+			
+			listNode.add(root);
+			TraverseBFS();
 		}
 	}
 	@Override

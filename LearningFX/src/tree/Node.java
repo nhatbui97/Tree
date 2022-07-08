@@ -1,7 +1,7 @@
 package tree;
 
 public class Node {
-	int value;
+	public int value;
 	Node left, right;
 	Node(int value){
 		this.value = value;

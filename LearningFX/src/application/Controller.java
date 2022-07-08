@@ -19,6 +19,7 @@ import tree.*;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
@@ -203,14 +204,19 @@ public class Controller{
     	
     	//visitNode()
     	
-    	draw(layout, parentValue, insertValue, Color.WHITE, Color.BLACK, 2);
     	
-    	if (tree.isRotate() == true) {
+    	if (tree.getListNodeBeforeRotate().isEmpty()) {
+    		draw(layout, Color.WHITE, Color.BLACK, 2,
+    				tree.getListNode(), parentValue, insertValue);
+    	}else {
+    		draw(layout, Color.WHITE, Color.BLACK, 2,
+        			tree.getListNodeBeforeRotate(), parentValue, insertValue);
     		
+        	if (tree.getListNodeBeforeLimitHeight().isEmpty() == false) {
+        		
+        	}
     	}
-    	if (tree.isHeightLimit() == true) {
-    		
-    	}
+    	
     	seqT.play();
     	seqT.getChildren().clear();
     }
@@ -406,7 +412,7 @@ public class Controller{
 	//_____________________________________________________________________________________
     @FXML
     private AnchorPane layoutVisit;
-	private void visitNode() {
+	/*private void visitNode() {
 		ArrayList<Integer> orderVisit = tree.getOrderVisit();
 		ArrayList<Integer> orderDirection = tree.getOrderDirection();
 		int size = orderVisit.size();
@@ -430,7 +436,7 @@ public class Controller{
 	        double errorY = Math.sqrt(radius*radius / (1 + a*a));
 	        double errorX = a*errorY;
 		}
-	}
+	}*/
 	private void showBoard(AnchorPane board, Button button) {
 		button.setVisible(false);
         
@@ -495,9 +501,30 @@ public class Controller{
         	searchButton.setVisible(true);
     	}
 	}
-	private void draw(AnchorPane lay, int parentValue, int insertValue,
-			Color fillColor, Color strokeColor, int strokeWidth) {
-    	int size = tree.getOrderVisit().size();
+	private void draw(AnchorPane lay, Color fillColor, Color strokeColor,
+			int strokeWidth, ArrayList<Node> listNode, int parentValue, int insertValue) {
+		ArrayList<Integer> orderVisit = new ArrayList<Integer>();
+		ArrayList<Integer> orderDirection = new ArrayList<Integer>();
+		for (Node N : listNode) {
+			if (N != null) {
+				if (insertValue == N.value) {
+					int i = listNode.indexOf(N);
+					while (i > 0) {
+						if (i % 2 == 1) {
+							orderDirection.add(0);
+						}else {
+							orderDirection.add(1);
+						}
+						i = (int) ((i - 1)/2);
+						orderVisit.add(listNode.get(i).value);
+					}
+					Collections.reverse(orderVisit);
+					Collections.reverse(orderDirection);
+				}
+			}
+		}
+		
+    	int size = orderVisit.size();
     	StackPane parentStack = null;
     	for (StackPane stack : listStack) {
     		for (javafx.scene.Node n : stack.getChildren()) {
@@ -517,7 +544,7 @@ public class Controller{
     	double errorY = Math.sqrt(radius*radius / (1 + a*a));
     	double errorX = a*errorY;
     	
-    	if (tree.getOrderDirection().get(size - 1) == 0) {
+    	if (orderDirection.get(size - 1) == 0) {
     		targetX = X + radius - targetX;
     		
             Line line = new Line(X + radius - errorX , Y + radius + errorY
