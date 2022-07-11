@@ -28,7 +28,7 @@ import javafx.event.*;
 
 public class Controller{
 	
-	private int speed = 1;
+	private double speed = 0.3;
 	private ArrayList<StackPane> listStack = new ArrayList<StackPane>();
 	private ArrayList<Line> listLine = new ArrayList<Line>();
     @FXML
@@ -135,7 +135,8 @@ public class Controller{
     //-------------------------------------------------------------------------------------------
     
     //insert
-    private SequentialTransition seqT = new SequentialTransition();
+    private SequentialTransition seq = new SequentialTransition();
+    private SequentialTransition seqMove = new SequentialTransition();
     private double radius = 12;
     @FXML
     private Button insertButton;
@@ -163,12 +164,10 @@ public class Controller{
 			draw(tree.getListNode(), insertValue);
 		}else {
 			draw(tree.getListNodeBeforeMove(), insertValue);
-			moveTree(tree.getListNodeBeforeMove(), tree.getListNode());	
+			moveTree(tree.getListNodeBeforeMove(), tree.getListNode());
 		}
-	    
-	    seqT.play();
-	    seqT.getChildren().clear();
-	    
+	    seq = new SequentialTransition();
+	    seqMove = new SequentialTransition();
 	    
 	}
 	@FXML
@@ -201,8 +200,8 @@ public class Controller{
     	//visit node
     	//draw
     	
-    	seqT.play();
-    	seqT.getChildren().clear();
+    	/*seqT.play();
+    	seqT.getChildren().clear();*/
     }
     @FXML
     void goBackInsert2(ActionEvent event) {
@@ -365,8 +364,8 @@ public class Controller{
 	//_____________________________________________________________________________________
     @FXML
     private AnchorPane layoutVisit;
-    private void visitNode() {
-
+    private void visitNode(ArrayList<Node> listNode, int value) {
+    	
 	}
 	private void showBoard(AnchorPane board, Button button) {
 		button.setVisible(false);
@@ -442,7 +441,7 @@ public class Controller{
 						FadeTransition ft = new FadeTransition(Duration.seconds(speed), insertLine);
 				        ft.setFromValue(0);
 				        ft.setToValue(1);
-				        seqT.getChildren().add(ft);
+				        seq.getChildren().add(ft);
 					}
 			        Text text = new Text(String.valueOf(insertValue));
 			        text.setBoundsType(TextBoundsType.VISUAL); 
@@ -455,10 +454,11 @@ public class Controller{
 			        FadeTransition ft1 = new FadeTransition(Duration.seconds(speed), insertStack);
 			        ft1.setFromValue(0);
 			        ft1.setToValue(1);
-			        seqT.getChildren().add(ft1);   
+			        seq.getChildren().add(ft1);   
 				}
 			}
 		}
+		seq.play();
 	}
 	
 	/*Color fillColor;
@@ -532,16 +532,63 @@ public class Controller{
 	}
 	
 	private void moveTree(ArrayList<Node> fromListNode, ArrayList<Node> toListNode) {
-		/*while loop (fromListNode != toListNode)
-			(fromListNode null, toListNode not null) -> move node to null node and swap fromListNode*/
-		while ((fromListNode.subList(0, toListNode.size())).equals(toListNode) == false) {
-			for (int i = 0; i < toListNode.size(); i++) {
-				if (toListNode.get(i) != null && fromListNode.get(i) == null) {
-					moveToNull(toListNode.get(i), i);
-					Collections.swap(fromListNode, fromListNode.indexOf(toListNode.get(i)), i);
-				}
-			}
-		}
+		seq.setOnFinished(new EventHandler<ActionEvent>() {
+			
+            @Override
+            public void handle(ActionEvent event) {
+            	//remove all line
+            	for (Line line : listLine) {
+        			if (line.isVisible()) {
+        				FadeTransition ft = new FadeTransition(Duration.seconds(speed), line);
+        				ft.setFromValue(1);
+        				ft.setToValue(0);
+        				ft.play();
+        				ft.setOnFinished(new EventHandler<ActionEvent>() {      					
+        		            @Override
+        		            public void handle(ActionEvent event) {
+        		            	line.setVisible(false);
+        		            }
+        				});
+        			}	
+        		}
+            	/*while loop (fromListNode != toListNode)
+    			(fromListNode null, toListNode not null) -> move node to null node and swap fromListNode*/
+            	while ((fromListNode.subList(0, toListNode.size())).equals(toListNode) == false) {
+            		for (int i = 0; i < toListNode.size(); i++) {
+            			if (toListNode.get(i) != null && fromListNode.get(i) == null) {
+            				moveToNull(toListNode.get(i), i);
+            				Collections.swap(fromListNode, fromListNode.indexOf(toListNode.get(i)), i);
+            			}
+            		}
+            	}
+            	seqMove.play();
+            	seqMove.setOnFinished(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                		//add all line
+                		for (int i = 1; i < toListNode.size(); i++) {
+                			if (toListNode.get(i) != null) {
+                				Line line = listLine.get(i - 1);
+                				FadeTransition ft = new FadeTransition(Duration.millis(1), line);
+            					ft.setFromValue(1);
+            					ft.setToValue(0);
+                				ft.play();
+                				ft.setOnFinished(new EventHandler<ActionEvent>() {
+                                    @Override
+                                    public void handle(ActionEvent event) {
+                                    	line.setVisible(true);
+                        				FadeTransition ft = new FadeTransition(Duration.seconds(speed), line);
+                        				ft.setFromValue(0);
+                        				ft.setToValue(1);
+                        				ft.play();
+                                    }
+                				});		
+                			}	
+                		}
+                    }
+            	});
+            }            	
+		});	
 	}
 	
 	private void moveToNull(Node n1, int nullIndex) {
@@ -569,7 +616,7 @@ public class Controller{
 		tt.setDuration(Duration.seconds(speed));
 		tt.setToX(moveNode.getTranslateX() + moveX);
 		tt.setToY(moveNode.getTranslateY() + moveY);
-		seqT.getChildren().add(tt);
+		seqMove.getChildren().add(tt);
 				
 		nullNode.setTranslateX(nullNode.getTranslateX() - moveX);
 		nullNode.setTranslateY(nullNode.getTranslateY() - moveY);

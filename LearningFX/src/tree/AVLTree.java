@@ -416,8 +416,7 @@ public class AVLTree extends Tree{
 			TraverseDFS(root);
 		}else if (algorithm == "BFS") {
 			listNode.clear();
-			floor = 0;
-			
+			floor = 0;	
 			listNode.add(root);
 			TraverseBFS();
 		}

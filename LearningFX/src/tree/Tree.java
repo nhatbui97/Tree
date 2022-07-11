@@ -6,6 +6,7 @@ public class Tree {
 	Node root;
 	ArrayList<Node> listNode = new ArrayList<Node>();
 	ArrayList<Node> listNodeBeforeMove = new ArrayList<Node>();
+	ArrayList<Node> listNodeAfterDelete
 	
 	public Tree() {}
 	public Node getRoot() {
