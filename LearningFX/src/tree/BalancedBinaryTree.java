@@ -1,6 +1,6 @@
 package tree;
 
-public class BalancedBinaryTree {
+public class BalancedBinaryTree extends Tree{
 
 }
 

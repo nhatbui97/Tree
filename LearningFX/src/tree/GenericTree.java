@@ -1,5 +1,5 @@
 package tree;
 
-public class GenericTree {
+public class GenericTree extends Tree {
 
 }

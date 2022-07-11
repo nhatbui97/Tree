@@ -43,19 +43,25 @@ public class Controller{
 		buttonBar.setVisible(true);
 		listViewBar.setVisible(true);
 		
-        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), layout);
+		hideAllBoard();
+		
+		FadeTransition ft = new FadeTransition(Duration.seconds(0.5), layout);
         ft.setFromValue(1);
         ft.setToValue(0);
         ft.play();
-        
-        hideAllBoard();
         
         ft.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
             	layout.getChildren().clear();
+        		drawSkeleton();
+        		FadeTransition ft = new FadeTransition(Duration.seconds(0.01), layout);
+	            ft.setFromValue(0);
+	            ft.setToValue(1);
+	            ft.play();
             }
         });
+        
         
 	}
 	void getMaxDistance() {
@@ -88,13 +94,11 @@ public class Controller{
     	if (slideButtonBar.getToX() == 0) {
     		slideButtonBar.setToX(slideToX);
     		slideButtonBar.play();
-    		slideButtonLeft.setGraphic(null);
     		InputStream input = clazz.getResourceAsStream("/image/slideLeft.png");
     		slideButtonLeft.setGraphic(new ImageView(new Image(input, 22, 22, false, true)));
     	}else {
     		slideButtonBar.setToX(0);
     		slideButtonBar.play();
-    		slideButtonLeft.setGraphic(null);
     		InputStream input = clazz.getResourceAsStream("/image/slideRight.png");
     		slideButtonLeft.setGraphic(new ImageView(new Image(input, 22, 22, false, true)));
     	}
@@ -109,7 +113,6 @@ public class Controller{
     	hideAllBoard();
     	if (tree.getRoot() != null) {
 	    	tree.Create();
-	    	listStack.removeAll(listStack);
 	    	
 	        FadeTransition ft = new FadeTransition(Duration.seconds(0.5), layout);
 	        ft.setFromValue(1);
@@ -119,6 +122,11 @@ public class Controller{
 	            @Override
 	            public void handle(ActionEvent event) {
 	            	layout.getChildren().clear();
+	            	drawSkeleton();
+	                FadeTransition ft = new FadeTransition(Duration.seconds(0.01), layout);
+	                ft.setFromValue(0);
+	                ft.setToValue(1);
+	                ft.play();
 	            }
 	        });
 	    	
@@ -142,51 +150,39 @@ public class Controller{
     @FXML
     private TextField insertText2;
     @FXML
+	void goInsert1(ActionEvent event) {
+		
+		int insertValue = Integer.parseInt(insertText1.getText());
+		insertText1.setText(null);
+		tree.Insert(insertValue);
+		
+		//visit node
+		
+		//draw
+		if (tree.getListNodeBeforeMove().isEmpty()) {
+			draw(tree.getListNode(), insertValue);
+		}else {
+			draw(tree.getListNodeBeforeMove(), insertValue);
+			moveTree(tree.getListNodeBeforeMove(), tree.getListNode());	
+		}
+	    
+	    seqT.play();
+	    seqT.getChildren().clear();
+	    
+	    
+	}
+	@FXML
     void Insert(ActionEvent event) {
-    	if (tree.getRoot() == null){
-    		insertText1.setText(null);
-    		hideOtherBoard(insertBoard1);
-    		showBoard(insertBoard1, insertButton);   		
-    	}else {
+    	if (tree instanceof GenericTree ){
     		insertText2.setText(null);
     		parentText2.setText(null);
     		hideOtherBoard(insertBoard2);
     		showBoard(insertBoard2, insertButton);
+    	}else {
+    		insertText1.setText(null);
+    		hideOtherBoard(insertBoard1);
+    		showBoard(insertBoard1, insertButton);   
     	}
-    }
-    @FXML
-    void goInsert1(ActionEvent event) {
-    	
-    	int insertValue = Integer.parseInt(insertText1.getText());
-    	insertText1.setText(null);
-    	tree.Insert(insertValue);
-    	goBackInsert1(event);
-    	
-    	double layoutWidth = layout.getWidth();
-    	
-    	Circle circle = new Circle();
-    	circle.setRadius(radius);
-    	circle.setFill(Color.WHITE);
-    	circle.setStrokeWidth(2);
-    	circle.setStroke(Color.BLACK);
-        
-        Text text = new Text(String.valueOf(insertValue));
-        text.setBoundsType(TextBoundsType.VISUAL); 
-        text.setStyle("-fx-font-weight: bold");
-        StackPane stack = new StackPane();
-        stack.getChildren().addAll(circle, text);
-        
-        stack.setLayoutX(layoutWidth/2 - circle.getRadius());
-        stack.setLayoutY(75);
-        
-        listStack.add(stack);
-        
-        FadeTransition ft = new FadeTransition(Duration.seconds(speed), layout);
-        ft.setFromValue(0);
-        ft.setToValue(1);
-        ft.play();
-        
-        layout.getChildren().add(stack);
     }
     @FXML
     void goBackInsert1(ActionEvent event) {	
@@ -202,20 +198,8 @@ public class Controller{
     	parentText2.setText(null);
     	insertText2.setText(null);   
     	
-    	//visitNode()
-    	
-    	
-    	if (tree.getListNodeBeforeRotate().isEmpty()) {
-    		draw(layout, Color.WHITE, Color.BLACK, 2,
-    				tree.getListNode(), parentValue, insertValue);
-    	}else {
-    		draw(layout, Color.WHITE, Color.BLACK, 2,
-        			tree.getListNodeBeforeRotate(), parentValue, insertValue);
-    		
-        	if (tree.getListNodeBeforeLimitHeight().isEmpty() == false) {
-        		
-        	}
-    	}
+    	//visit node
+    	//draw
     	
     	seqT.play();
     	seqT.getChildren().clear();
@@ -248,37 +232,8 @@ public class Controller{
     	tree.Delete(deleteValue);
     	
     	//visitNode()
-    	
-    	for (StackPane stack : listStack) {
-    		for (javafx.scene.Node n : stack.getChildren()) {
-    			if (n instanceof Text) {
-    				if(((Text) n).getText().equals(String.valueOf(deleteValue))) {
-    					Line lineRemove = listLine.get(listStack.indexOf(stack) - 1);
-    					
-    					FadeTransition ft = new FadeTransition(Duration.seconds(speed), stack);
-	        	        ft.setFromValue(1);
-	        	        ft.setToValue(0);
-	        	        ft.play();
-	        	        
-    					FadeTransition ft1 = new FadeTransition(Duration.seconds(speed), lineRemove);
-	        	        ft1.setFromValue(1);
-	        	        ft1.setToValue(0);
-	        	        ft1.play();
-	        	        
-	        	        ft1.setOnFinished(new EventHandler<ActionEvent>() {
-	        	            @Override
-	        	            public void handle(ActionEvent event) {
-	        	            	listStack.remove(stack);
-	        	            	listLine.remove(lineRemove);
-	        	            	layout.getChildren().remove(stack);
-	        	            	layout.getChildren().remove(lineRemove);
-	        	            }
-	        	        });
-
-    				}
-    			}
-    		}
-    	}
+    	//deleteNode()
+    
     }
 
     @FXML
@@ -306,7 +261,7 @@ public class Controller{
     }
     @FXML
     void goUpdate(ActionEvent event) {
-
+    	
     }
 
     @FXML
@@ -389,13 +344,11 @@ public class Controller{
     	if (slideListView.getToX() == 0) {
     		slideListView.setToX (slideToX);
     		slideListView.play();
-    		slideButtonRight.setGraphic(null);
     		InputStream input = clazz.getResourceAsStream("/image/slideRight.png");
 	    	slideButtonRight.setGraphic(new ImageView(new Image(input, 22, 22, false, true)));
     	}else{
     		slideListView.setToX(0);
     		slideListView.play();
-	    	slideButtonRight.setGraphic(null);
 	    	InputStream input = clazz.getResourceAsStream("/image/slideLeft.png");
 	    	slideButtonRight.setGraphic(new ImageView(new Image(input, 22, 22, false, true)));
     	}
@@ -412,31 +365,9 @@ public class Controller{
 	//_____________________________________________________________________________________
     @FXML
     private AnchorPane layoutVisit;
-	/*private void visitNode() {
-		ArrayList<Integer> orderVisit = tree.getOrderVisit();
-		ArrayList<Integer> orderDirection = tree.getOrderDirection();
-		int size = orderVisit.size();
-	    for (int i = 0; i < size; i++) {
-	    	StackPane parentStack = null;
-	    	for (StackPane stack : listStack) {
-	    		for (javafx.scene.Node n : stack.getChildren()) {
-	    			if (n instanceof Text) {
-	    				Text n1 = (Text) n;
-	    				if (n1.getText().equals(String.valueOf(orderVisit.get(i)))) {
-	    					parentStack = stack;
-	    				}
-	    			}
-	    		}
-	    	}
-	    	double X = parentStack.getLayoutX();
-	    	double Y = parentStack.getLayoutY();
-	        double targetX = 200 * Math.pow(0.5, size - 1);
-	        double targetY = 75 + 100 * (1 - Math.pow(0.9, size)) / 0.1;
-	        double a = targetX / (100 * Math.pow(0.9, size - 1));
-	        double errorY = Math.sqrt(radius*radius / (1 + a*a));
-	        double errorX = a*errorY;
-		}
-	}*/
+    private void visitNode() {
+
+	}
 	private void showBoard(AnchorPane board, Button button) {
 		button.setVisible(false);
         
@@ -501,133 +432,152 @@ public class Controller{
         	searchButton.setVisible(true);
     	}
 	}
-	private void draw(AnchorPane lay, Color fillColor, Color strokeColor,
-			int strokeWidth, ArrayList<Node> listNode, int parentValue, int insertValue) {
-		ArrayList<Integer> orderVisit = new ArrayList<Integer>();
-		ArrayList<Integer> orderDirection = new ArrayList<Integer>();
-		for (Node N : listNode) {
-			if (N != null) {
-				if (insertValue == N.value) {
-					int i = listNode.indexOf(N);
-					while (i > 0) {
-						if (i % 2 == 1) {
-							orderDirection.add(0);
-						}else {
-							orderDirection.add(1);
-						}
-						i = (int) ((i - 1)/2);
-						orderVisit.add(listNode.get(i).value);
+	private void draw(ArrayList<Node> listNode, int insertValue) {
+		for (int i = 0; i < listNode.size(); i++) {
+			if (listNode.get(i) != null) {
+				if (listNode.get(i).value == insertValue) {
+					if (i != 0) {
+						Line insertLine = listLine.get(i - 1);
+						insertLine.setVisible(true);
+						FadeTransition ft = new FadeTransition(Duration.seconds(speed), insertLine);
+				        ft.setFromValue(0);
+				        ft.setToValue(1);
+				        seqT.getChildren().add(ft);
 					}
-					Collections.reverse(orderVisit);
-					Collections.reverse(orderDirection);
+			        Text text = new Text(String.valueOf(insertValue));
+			        text.setBoundsType(TextBoundsType.VISUAL); 
+			        text.setStyle("-fx-font-weight: bold");
+			        
+			        StackPane insertStack = listStack.get(i);
+			        insertStack.getChildren().add(text);
+			        insertStack.setVisible(true);
+			        
+			        FadeTransition ft1 = new FadeTransition(Duration.seconds(speed), insertStack);
+			        ft1.setFromValue(0);
+			        ft1.setToValue(1);
+			        seqT.getChildren().add(ft1);   
 				}
 			}
 		}
-		
-    	int size = orderVisit.size();
-    	StackPane parentStack = null;
-    	for (StackPane stack : listStack) {
-    		for (javafx.scene.Node n : stack.getChildren()) {
-    			if (n instanceof Text) {
-    				Text n1 = (Text) n;
-    				if (n1.getText().equals(String.valueOf(parentValue))) {
-    					parentStack = stack;
-    				}
-    			}
-    		}
-    	}
-    	double X = parentStack.getLayoutX();
-    	double Y = parentStack.getLayoutY();
-    	double targetX = 200 * Math.pow(0.5, size - 1);
-    	double targetY = 75 + 100 * (1 - Math.pow(0.9, size)) / 0.1;
-    	double a = targetX / (100 * Math.pow(0.9, size - 1));
-    	double errorY = Math.sqrt(radius*radius / (1 + a*a));
-    	double errorX = a*errorY;
-    	
-    	if (orderDirection.get(size - 1) == 0) {
-    		targetX = X + radius - targetX;
-    		
-            Line line = new Line(X + radius - errorX , Y + radius + errorY
-            		, targetX + errorX , targetY + radius - errorY );
-            line.setStrokeWidth(strokeWidth);
-            line.setStroke(strokeColor);
-            
-            FadeTransition ft = new FadeTransition(Duration.seconds(speed), line);
-            ft.setFromValue(0);
-            ft.setToValue(1);
-            seqT.getChildren().add(ft);
-     
-            Circle circle = new Circle();
-        	circle.setRadius(radius);
-        	circle.setFill(fillColor);
-        	circle.setStrokeWidth(strokeWidth);
-        	circle.setStroke(strokeColor);
-            
-            Text text = new Text(String.valueOf(insertValue));
-            text.setBoundsType(TextBoundsType.VISUAL); 
-            text.setStyle("-fx-font-weight: bold");
-            StackPane stack = new StackPane();
-            stack.getChildren().addAll(circle, text);
-            
-            stack.setLayoutX(targetX - radius);
-            stack.setLayoutY(targetY);
-            
-            FadeTransition ft1 = new FadeTransition(Duration.seconds(speed), stack);
-            ft1.setFromValue(0);
-            ft1.setToValue(1);
-            seqT.getChildren().add(ft1);
-            
-            if (lay == layout) {
-            	listLine.add(line);
-            	listStack.add(stack);
-            }
-            
-            lay.getChildren().add(line);
-            lay.getChildren().add(stack);
-                     
-    	}else {
-    		targetX = X + radius + targetX;
-    		
-            Line line = new Line(X + radius + errorX + 2 , Y + radius + errorY
-            		, targetX - errorX , targetY + radius - errorY );
-            line.setStrokeWidth(strokeWidth);
-            line.setStroke(strokeColor);
-            
-            FadeTransition ft = new FadeTransition(Duration.seconds(speed), line);
-            ft.setFromValue(0);
-            ft.setToValue(1);
-            seqT.getChildren().add(ft);
-            
-            Circle circle = new Circle();
-        	circle.setRadius(radius);
-        	circle.setFill(fillColor);
-        	circle.setStrokeWidth(strokeWidth);
-        	circle.setStroke(strokeColor);
-            
-            Text text = new Text(String.valueOf(insertValue));
-            text.setBoundsType(TextBoundsType.VISUAL); 
-            text.setStyle("-fx-font-weight: bold");
-            StackPane stack = new StackPane();
-            stack.getChildren().addAll(circle, text);
-            
-            stack.setLayoutX(targetX - radius);
-            stack.setLayoutY(targetY);
-            
-            FadeTransition ft1 = new FadeTransition(Duration.seconds(speed), stack);
-            ft1.setFromValue(0);
-            ft1.setToValue(1);
-            seqT.getChildren().add(ft1);
-            
-            if (lay == layout) {
-            	listLine.add(line);
-            	listStack.add(stack);
-            }
-            
-            lay.getChildren().add(line);
-            lay.getChildren().add(stack);
-    		
-    	}
-    	
 	}
+	
+	/*Color fillColor;
+	Color strokeColor;
+	int strokeWidth;
+	private void setVisual(Color fillColor, Color strokeColor, int strokeWidth) {
+		this.fillColor = fillColor;
+		this.strokeColor = strokeColor;
+		this.strokeWidth = strokeWidth;
+	}*/
+	
+	private void drawSkeleton() {
+		listStack.clear();
+		listLine.clear();
+		double Y = 75;
+		
+		for (int i = 0; i < 6; i++) {
+			double startX = layout.getWidth() / Math.pow(2, i + 1);
+			double X = startX;
+			double FromX = 2 * startX;
+			double FromY = Y;
+			double a = 0;
+			double errorX = 0;
+			double errorY = 0;
+			if (i != 0) {
+				Y += 100 * Math.pow(0.9, i - 1);
+				a = 200 * Math.pow(0.5, i - 1) / (100 * Math.pow(0.9, i - 1));
+				errorY = Math.sqrt(radius*radius / (1 + a*a));
+				errorX = a * errorY;
+			}
+			for (int j = 0; j < Math.pow(2, i); j++) {
+				 
+				StackPane stack = new StackPane();
+				
+				Circle circle = new Circle();
+		     	circle.setRadius(radius);
+		     	circle.setFill(Color.WHITE);
+		     	circle.setStrokeWidth(2);
+		     	circle.setStroke(Color.BLACK);
+		     	
+		     	stack.getChildren().add(circle);   	
+		        stack.setLayoutX(X - radius);
+		        stack.setLayoutY(Y);
+		        stack.setVisible(false);
+		        
+		        listStack.add(stack);
+		        layout.getChildren().add(stack);	
+				
+				if (i != 0) {
+					Line line;
+					if (j % 2 == 0) {
+						line = new Line(FromX - errorX , FromY + radius + errorY + 1,
+								X + errorX, Y + radius - errorY);
+					}else {
+						line = new Line(FromX + errorX + 2, FromY + radius + errorY + 1,
+								X - errorX, Y + radius - errorY);
+					}
+			        line.setStrokeWidth(2);
+			        line.setStroke(Color.BLACK);
+			        line.setVisible(false);
+			        
+			        listLine.add(line);
+			        layout.getChildren().add(line);
+				}
+				X += 2 * startX;
+				if (j % 2 == 1) {
+					FromX += 4 * startX;
+				}
+			}
+		}
+	}
+	
+	private void moveTree(ArrayList<Node> fromListNode, ArrayList<Node> toListNode) {
+		/*while loop (fromListNode != toListNode)
+			(fromListNode null, toListNode not null) -> move node to null node and swap fromListNode*/
+		while ((fromListNode.subList(0, toListNode.size())).equals(toListNode) == false) {
+			for (int i = 0; i < toListNode.size(); i++) {
+				if (toListNode.get(i) != null && fromListNode.get(i) == null) {
+					moveToNull(toListNode.get(i), i);
+					Collections.swap(fromListNode, fromListNode.indexOf(toListNode.get(i)), i);
+				}
+			}
+		}
+	}
+	
+	private void moveToNull(Node n1, int nullIndex) {
+		//take index
+		int index = 0;
+		for (StackPane stack : listStack) {
+			for (javafx.scene.Node n : stack.getChildren()) {
+				if (n instanceof Text) {
+					if(((Text) n).getText().equals(String.valueOf(n1.value))) {
+						index = listStack.indexOf(stack);
+					}
+				}
+			}
+		}		
+		//swap stack on layout
+		StackPane moveNode = listStack.get(index);
+		StackPane nullNode = listStack.get(nullIndex);	
+				
+		double moveX = (nullNode.getLayoutX() + nullNode.getTranslateX())
+				- (moveNode.getLayoutX() + moveNode.getTranslateX());
+		double moveY = (nullNode.getLayoutY() + nullNode.getTranslateY())
+				- (moveNode.getLayoutY() + moveNode.getTranslateY());
+		TranslateTransition tt = new TranslateTransition();
+		tt.setNode(moveNode);
+		tt.setDuration(Duration.seconds(speed));
+		tt.setToX(moveNode.getTranslateX() + moveX);
+		tt.setToY(moveNode.getTranslateY() + moveY);
+		seqT.getChildren().add(tt);
+				
+		nullNode.setTranslateX(nullNode.getTranslateX() - moveX);
+		nullNode.setTranslateY(nullNode.getTranslateY() - moveY);
+		
+		//swap listStack
+		Collections.swap(listStack, index, nullIndex);
+
+	}
+	
 }
 

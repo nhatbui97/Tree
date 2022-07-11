@@ -1,6 +1,6 @@
 package tree;
 
-public class BinarySearchTree {
+public class BinarySearchTree extends Tree{
 
 		
 }

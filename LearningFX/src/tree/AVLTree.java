@@ -115,65 +115,67 @@ public class AVLTree extends Tree{
 		updateHeight(z);
 	}
 	private void rotate(AVLNode N) {
-		if (balance(N) == 2 || balance(N) == -2) {
-			rotate = true;
-			AVLNode parent = parentNodeOf(N);
-			AVLNode localRoot;
-			if (balance(N) == 2) {
-				if (balance(N.left) == 1) {
-					localRoot = N.left;
-					LL(N);
-				}else {
-					localRoot = N.left.right;
-					LR(N);
-				}
-			}else{
-				if (balance(N.right) == -1) {
-					localRoot = N.right;
-					RR(N);
-				}else {
-					localRoot = N.right.left;
-					RL(N);
-				}
-			}
-			if (parent == null) {
-				root = localRoot;
+		AVLNode parent = parentNodeOf(N);
+		AVLNode localRoot;
+		if (balance(N) == 2) {
+			if (balance(N.left) == 1) {
+				localRoot = N.left;
+				LL(N);
 			}else {
-				if (isLeftChild) {
-					parent.left = localRoot;
-				}else {
-					parent.right = localRoot;
-				}
+				localRoot = N.left.right;
+				LR(N);
+			}
+		}else{
+			if (balance(N.right) == -1) {
+				localRoot = N.right;
+				RR(N);
+			}else {
+				localRoot = N.right.left;
+				RL(N);
+			}
+		}
+		if (parent == null) {
+			root = localRoot;
+		}else {
+			if (isLeftChild) {
+				parent.left = localRoot;
+			}else {
+				parent.right = localRoot;
 			}
 		}
 		
 	}
 	//--------------------------------------------------------------
 	//nhập/xóa
-	private void Insert(AVLNode N , 
-			int parentValue, int insertValue) {
-		if (parentValue < N.value && insertValue < N.value) {
-			Insert(N.left, parentValue, insertValue);
-		}else if (parentValue > N.value && insertValue > N.value) {
-			Insert(N.right, parentValue, insertValue);
-		}else if (parentValue == N.value) {
-			if (insertValue < parentValue && N.left == null) {
-				N.left = new AVLNode(insertValue);
-			}else if (insertValue > parentValue && N.right == null) {
-				N.right = new AVLNode(insertValue);
+	private AVLNode parentInsert;
+	private void Insert(AVLNode N, int insertValue) {
+		if (N != null) {
+			if (insertValue < N.value) {
+				parentInsert = N;
+				Insert(N.left, insertValue);
+			}else if (insertValue > N.value) {
+				parentInsert = N;
+				Insert(N.right, insertValue);
 			}
-		}
-		updateHeight(N);
-		if (listNodeBeforeRotate.isEmpty()) {
-			listNodeBeforeRotate = getListNode();
-		}
-		rotate(N);
-		if (root.height - 1 > maxDistance) {
-			heightLimit = true;
-			if (listNodeBeforeLimitHeight.isEmpty()) {
-				listNodeBeforeLimitHeight = getListNode();
+			updateHeight(N);
+			if (balance(N) == 2 || balance(N) == -2) {
+				if (listNodeBeforeMove.isEmpty()) {
+					listNodeBeforeMove = (ArrayList<Node>) getListNode().clone();
+				}
+				rotate(N);
 			}
-			limitDistance(N);
+			if (root.height - 1 > maxDistance) {
+				if (listNodeBeforeMove.isEmpty()) {
+					listNodeBeforeMove = (ArrayList<Node>) getListNode().clone();
+				}
+				limitDistance(N);
+			}
+		}else{
+			if (insertValue < parentInsert.value) {
+				parentInsert.left = new AVLNode(insertValue);
+			}else if (insertValue > parentInsert.value) {
+				parentInsert.right = new AVLNode(insertValue);
+			}
 		}
 	}
 	private void Delete(AVLNode N, int deleteValue) {
@@ -375,16 +377,13 @@ public class AVLTree extends Tree{
 		root = null;
 	}
 	@Override
-	public void Insert(int parentValue, int insertValue) {
-		listNodeBeforeRotate.clear();
-		listNodeBeforeLimitHeight.clear();
-		Insert(root, parentValue, insertValue);
-	}
-	@Override
 	public void Insert(int insertValue) {
-		listNodeBeforeRotate.clear();
-		listNodeBeforeLimitHeight.clear();
-		root = new AVLNode(insertValue);
+		listNodeBeforeMove.clear();
+		if (root == null) {
+			root = new AVLNode(insertValue);
+		}else {
+			Insert(root, insertValue);
+		}
 	}
 	@Override
 	public void Delete(int deleteValue) {

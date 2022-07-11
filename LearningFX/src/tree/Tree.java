@@ -5,20 +5,14 @@ import java.util.ArrayList;
 public class Tree {
 	Node root;
 	ArrayList<Node> listNode = new ArrayList<Node>();
-	ArrayList<Node> listNodeBeforeRotate = new ArrayList<Node>();
-	ArrayList<Node> listNodeBeforeLimitHeight = new ArrayList<Node>();
-	boolean rotate = false;
-	boolean heightLimit = false;
+	ArrayList<Node> listNodeBeforeMove = new ArrayList<Node>();
 	
-	public ArrayList<Node> getListNodeBeforeRotate() {
-		return listNodeBeforeRotate;
-	}
-	public ArrayList<Node> getListNodeBeforeLimitHeight() {
-		return listNodeBeforeLimitHeight;
-	}
 	public Tree() {}
 	public Node getRoot() {
 		return root;
+	}
+	public ArrayList<Node> getListNodeBeforeMove() {
+		return listNodeBeforeMove;
 	}
 	public ArrayList<Node> getListNode() {
 		Traverse("BFS");
